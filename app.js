@@ -281,6 +281,17 @@ function handlePay() {
   show('screen-result');
 }
 
+// ========== 私域引流 ==========
+var WECHAT_ID = 'haowanzy666';
+
+function copyWechat() {
+  navigator.clipboard.writeText(WECHAT_ID).then(function() {
+    toast('✅ 已复制微信号：' + WECHAT_ID + '\n打开微信添加好友即可领取');
+  }).catch(function() {
+    toast('微信号：' + WECHAT_ID + '\n请手动搜索添加');
+  });
+}
+
 // ========== 其他操作 ==========
 function restartTest() {
   startTest();
