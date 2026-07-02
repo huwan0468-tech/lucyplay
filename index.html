@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你适合继续打工还是创业？</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="screen-start" class="screen active">
+  <div class="start-content">
+    <div class="start-icon">🧭</div>
+    <h1 class="start-title">你适合继续打工<br>还是去创业？</h1>
+    <p class="start-subtitle">32道专业心理测评题 · 4种人格类型<br>基于MBTI与创业心理学研究</p>
+    <div class="start-stats">
+      <div class="stat-item"><div class="stat-num">12.6万</div><div class="stat-label">已完成测试</div></div>
+      <div class="stat-item"><div class="stat-num">87%</div><div class="stat-label">认为准确</div></div>
+      <div class="stat-item"><div class="stat-num">4min</div><div class="stat-label">平均用时</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">🚀 开始免费测试</button>
+    <p class="start-footer">前5题免费体验 · 完整报告需解锁</p>
+  </div>
+</div>
+
+<div id="screen-test" class="screen">
+  <div class="test-header">
+    <div class="progress-info">
+      <span class="progress-count">第 <span id="curQ">1</span> / <span id="totalQ">32</span> 题</span>
+      <span style="font-size:12px;color:var(--text2);" id="freeTag">🆓 免费体验</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:3%;"></div></div>
+  </div>
+  <div class="question-num" id="qNum">QUESTION 01</div>
+  <div class="question-text" id="qText"></div>
+  <div class="options" id="options"></div>
+</div>
+
+<div id="screen-result" class="screen">
+  <div class="result-card" id="resultCard">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-type" id="resultTypeLabel"></div>
+    <h2 class="result-title" id="resultTitle"></h2>
+    <p class="result-subtitle" id="resultSubtitle"></p>
+    <div class="score-section" id="scoreSection"></div>
+    <div class="result-advice">
+      <div class="advice-title">💡 给你的建议</div>
+      <div class="advice-text" id="adviceText"></div>
+    </div>
+  </div>
+  <div class="result-actions">
+    <button class="btn-outline" onclick="restartTest()">🔄 再测一次</button>
+    <button class="btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+  <div class="paywall-banner" id="paywallBanner">
+    <div class="pw-title">🔓 解锁完整深度报告</div>
+    <div class="pw-desc">含32题完整解析 · 职业路径建议 · 风险预警 · 行动清单</div>
+    <button class="btn-buy" onclick="showPay()">💰 ¥1.99 解锁完整报告</button>
+  </div>
+</div>
+
+<div id="screen-pay" class="screen">
+  <div class="pay-card">
+    <div class="pay-icon">🔮</div>
+    <h2 class="pay-title">完整深度报告</h2>
+    <p class="pay-desc">基于32道题的完整分析，帮你看清职业方向</p>
+    <div class="pay-features">
+      <div class="pay-feature"><span class="pf-icon">📊</span> 四维度深度解析</div>
+      <div class="pay-feature"><span class="pf-icon">🗺️</span> 个性化职业路径建议</div>
+      <div class="pay-feature"><span class="pf-icon">⚠️</span> 创业风险预警评估</div>
+      <div class="pay-feature"><span class="pf-icon">✅</span> 30天行动清单</div>
+      <div class="pay-feature"><span class="pf-icon">💬</span> 社群交流权限</div>
+    </div>
+    <div class="pay-price"><small>¥</small>1.99</div>
+    <div class="pay-original">原价 ¥9.99</div>
+    <button class="btn-pay" onclick="handlePay()">💰 立即解锁</button>
+    <p class="pay-guarantee">🛡️ 不满意全额退款 · 已帮助12.6万人</p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
