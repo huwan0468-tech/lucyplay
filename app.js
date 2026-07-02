@@ -170,7 +170,7 @@ var R = {
 };
 
 // ========== 状态 ==========
-var cur = 0, sc = { risk:0, create:0, lead:0, free:0 }, ans = [], FREE = 5, paid = false;
+var cur = 0, sc = { risk:0, create:0, lead:0, free:0 }, ans = [], paid = false;
 
 function $(id) { return document.getElementById(id); }
 
@@ -203,8 +203,7 @@ function renderQ() {
   $('qText').textContent = q.t;
   $('progressFill').style.width = (cur / Q.length * 100) + '%';
   var ft = $('freeTag');
-  if (cur >= FREE) { ft.textContent = '🔒 需解锁'; ft.style.color = 'var(--gold)'; }
-  else { ft.textContent = '🆓 免费体验'; ft.style.color = 'var(--text2)'; }
+  ft.textContent = '🆓 限时免费'; ft.style.color = '#2ecc71';
   var html = '';
   q.o.forEach(function(opt, i) {
     html += '<button class="option-btn" onclick="pick(' + i + ')"><span class="option-letter">' + opt.l + '</span><span class="option-text">' + opt.x + '</span></button>';
@@ -213,10 +212,6 @@ function renderQ() {
 }
 
 function pick(i) {
-  if (cur >= FREE && !paid) {
-    showPay();
-    return;
-  }
   var q = Q[cur];
   var opt = q.o[i];
   sc[opt.tr] += opt.s;
@@ -247,7 +242,9 @@ function showResult() {
   $('resultTypeLabel').textContent = r.lb;
   $('resultTitle').textContent = r.ti;
   $('resultSubtitle').textContent = r.su;
-  $('adviceText').textContent = r.ad;
+  // 免费版只显示简短建议（前50字），付费解锁完整报告
+  var shortAdvice = r.ad.substring(0, 50) + '……';
+  $('adviceText').textContent = shortAdvice;
   var dims = [
     { key:'risk', label:'冒险精神', cls:'risk', val:sc.risk },
     { key:'create', label:'创造力', cls:'create', val:sc.create },
@@ -260,6 +257,11 @@ function showResult() {
     secHtml += '<div class="score-item"><div class="score-label">' + d.label + '</div><div class="score-bar-wrap"><div class="score-bar-fill ' + d.cls + '" style="width:' + pct + '%"></div></div><div class="score-val">' + d.val + '/' + maxScore + '</div></div>';
   });
   $('scoreSection').innerHTML = secHtml;
+  // 付费解锁后显示完整建议
+  if (paid) {
+    $('adviceText').textContent = r.ad;
+    $('paywallBanner').classList.add('hidden');
+  }
   show('screen-result');
   window.scrollTo(0, 0);
 }
@@ -271,9 +273,12 @@ function showPay() {
 
 function handlePay() {
   paid = true;
-  toast('🎉 解锁成功！继续答题吧');
-  show('screen-test');
-  renderQ();
+  toast('🎉 解锁成功！查看完整报告');
+  var type = determineType();
+  var r = R[type];
+  $('adviceText').textContent = r.ad;
+  $('paywallBanner').classList.add('hidden');
+  show('screen-result');
 }
 
 // ========== 其他操作 ==========
